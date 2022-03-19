@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS build-env
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 
 COPY *.csproj .
@@ -11,5 +11,5 @@ RUN dotnet publish --no-restore -c Realse -o out
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=base /app/out .
 ENTRYPOINT ["dotnet", "DockerJenkinsTest.dll"]
